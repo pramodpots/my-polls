@@ -1,0 +1,28 @@
+{
+  "name": "voting-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppmakeitcount/my-polls.git"
+  },
+  "author": "ppmakeitcount",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ppmakeitcount/my-polls/issues"
+  },
+  "homepage": "https://github.com/ppmakeitcount/my-polls#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "jade": "^1.11.0",
+    "jquery": "^3.1.1",
+    "passport": "^0.3.2"
+  }
+}

@@ -1,0 +1,23 @@
+[
+ {
+  "name": "republicans",
+  "question": "who is the best captain",
+  "id": "f2754172-1c58-41ed-ae84-74e046888adb",
+  "options": [1, 2, 3, 4]
+ },
+ {
+  "name": "democrats",
+  "id": "c636d9e6-d1d4-4194-89f2-154643fbf9b9",
+  "options": [1, 2, 3, 4]
+ },
+ {
+  "name": "independents",
+  "id": "3c3c7ae8-6f8e-4136-9c8c-308a1fd2a9ec",
+  "options": [1, 2, 3, 4]
+ },
+ {
+  "name": "no politics",
+  "id": "a2e102c9-906c-4162-9d43-122e90f353d9",
+  "options": [1, 2, 3, 4]
+ }
+]
