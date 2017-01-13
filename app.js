@@ -1,7 +1,7 @@
 var express = require("express")
 var app = express();
-var polls = require("./data/polls.json")
 var _ = require("lodash")
+var polls = require("./data/polls.json");
 
 app.use(express.static("public"))
 app.use(express.static("node_modules/bootstrap/dist"));
@@ -15,8 +15,13 @@ app.listen(8080, function() {
 })
 
 app.get('/', function(req, res) {
-    res.render("polls");
+    res.render("layout");
 })
+
+app.get('/admin', function(req, res) {
+    res.render("adminUser");
+})
+
 app.get('/api/polls', function(req, res) {
     res.json(polls)
 })
@@ -42,9 +47,6 @@ app.get('/api/polls/:pollID/:optName', function(req, res) {
 //to add new option
 app.get('/api/addPollOption/:pollID/:newOptName', function(req, res) {
     var poll = _.find(polls, p => p.id === req.params.pollID);
-       // console.log("req: /api/add/polID/newopt: " + poll)
-
-    //var option = req.params.newOptName;
     var opt = {
         "optName" : req.params.newOptName,
         "count" : 1
@@ -52,3 +54,12 @@ app.get('/api/addPollOption/:pollID/:newOptName', function(req, res) {
     poll.options.push(opt)
     res.sendStatus(200);
 })
+
+app.get('/admin/myPolls',function(req, res) {
+    res.render('adminUser')
+})
+
+app.get('/admin/addPoll', function(req, res) {
+    res.render('addpoll');
+})
+

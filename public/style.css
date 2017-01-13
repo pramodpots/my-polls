@@ -3,9 +3,14 @@
 body {
     font-family: 'Lemonada', cursive;
     font-size: 1.5em;
-
 }
-
-.main-content {
-    padding: 10% 20px;
+.styled{
+  width: 800px;
+  height: auto;
+  border: 5px solid #f48523;
+  border-radius: 20px;
+  
+}
+.custom-padding{
+  padding: 80px 20px;
 }

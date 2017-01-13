@@ -24,8 +24,11 @@ html(lang='en')
             li
               a(href='/') Home 
             li
-              a.btn.btn-default(href='/login')
-                i.fa.fa-google.fa-1x(aria-hidden='true')
+              a(href='/admin/myPolls') My Polls
+            li
+              a(href='/admin/addPoll') Create Poll
+            li
+              a.btn.btn-default(href='/logout') logout
     .container
       .main-content
       include polls
