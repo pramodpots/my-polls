@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Lemonada');
+
 body {
-    padding-top: 50px;
+    font-family: 'Lemonada', cursive;
+    font-size: 1.5em;
+
 }
 
 .main-content {
-    padding: 40px 15px;
+    padding: 10% 20px;
 }

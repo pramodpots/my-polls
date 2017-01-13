@@ -1,67 +1,109 @@
-$(function () {
-
+$(function() {
+    var rows = [];
+    $('#vote').hide();
+    $('#option-add').hide();
     var pollID;
 
     $.ajax({
         type: "GET",
         url: "/api/polls"
-    }).done(function (polls) {
+    }).done(function(polls) {
         pollID = polls[0].id;
         //getMessages();
-        $.each(polls, function (key, poll) {
+        $.each(polls, function(key, poll) {
             var a = '<a href="#" data-room-id="' + poll.id + '" class="room list-group-item">' + poll.name + '</a>';
             $("#rooms").append(a);
         });
 
     });
 
-    /*$("#post").click(function () {
-        var message = {text: $("#message").val()};
-
-        $.ajax({
-            type: "POST",
-            url: "/api/rooms/" + roomId + "/messages",
-            data: JSON.stringify(message),
-            contentType: "application/json"
-        }).done(function () {
-            $("#message").val("");
-            getMessages();
-        });
-    });*/
-
-    $('body').on('click', 'a.room', function (event) {
+    $('body').on('click', 'a.room', function(event) {
         pollID = $(event.target).attr("data-room-id");
         getPollInfo();
+        $('#vote').show();
+        $('#option-add').show();
+
+
     });
 
     function getPollInfo() {
+        rows = [];
+        var title = "";
         $.ajax({
             type: "GET",
             url: "/api/polls/" + pollID,
-        }).done(function (data) {
-            //$.parseJSON(data);
-            $("#pollName").text("Poll for " + data.name);
-            var opt = "";
-           /* var array = data.options;
-            
-            
-            array.forEach(function(o){
-                opt += '<label class="radio-inline"><input type="radio" name="optradio">'+ o + '</label> ' ;
+        }).done(function(data) {
+            title = data.question;
+            var opt = '<form id="myForm">';
+            var array = data.options;
+            var showChart = " ";
+            array.forEach(function(o) {
+                opt += '<label class="radio-inline"><input type="radio" name="optradio" value="' + o.optName + '" >' + o.optName + '</label>';
+                showChart += o.optName + " " + o.count + " ";
+                var temp = [];
+                temp.push(o.optName);
+                temp.push(o.count);
+                rows.push(temp);
+                temp=[];
             })
-            
-             $("#show-opts").html(opt);*/
-             $("#question").text(data.question)
+            opt += '</form>'
+            console.log(showChart);
+            $("#show-opts").html(opt);
+            $("#question").text(data.question)
+
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'options')
+                data.addColumn('number', 'votes');
+                data.addRows(rows);
+                var options = {
+                    'legend': 'right',
+                    'is3D': true,
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('showchart'));
+                chart.draw(data, options);
+                rows=[];
+            }
         });
     }
 
-    $("#delete").click(function(){
+    $("#add-new-option").click(function() {
+        var newOptName = $('#new-option').val();
+        console.log(newOptName);
+        $('#new-option').val('');
+        $.ajax({
+            type: "GET",
+            url: "/api/addPollOption/" + pollID + "/" + newOptName
+        }).done(function(data) {
+            getPollInfo();
+        })
+    })
+
+    $('#vote').click(function() {
+        var optionName = $('input[name="optradio"]:checked').val();
+        $.ajax({
+            type: "GET",
+            url: "/api/polls/" + pollID + "/" + optionName,
+
+        }).done(function(data) {
+            getPollInfo();
+        })
+    })
+
+    $("#delete").click(function() {
         $.ajax({
             type: "DELETE",
             url: "/api/rooms/" + roomId + "/messages",
-        }).done(function () {
+        }).done(function() {
             $("#messages").val("");
         });
     });
+
 
 
 });
