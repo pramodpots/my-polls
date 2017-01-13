@@ -2,6 +2,7 @@ var express = require("express")
 var app = express();
 var _ = require("lodash")
 var polls = require("./data/polls.json");
+var uuid = require("node-uuid")
 
 app.use(express.static("public"))
 app.use(express.static("node_modules/bootstrap/dist"));
@@ -61,5 +62,37 @@ app.get('/admin/myPolls',function(req, res) {
 
 app.get('/admin/addPoll', function(req, res) {
     res.render('addpoll');
+})
+
+app.get('/admin/create', function(req, res) {
+    //res.render('addpoll');
+    //console.log("options" + req.query.options + "que" + req.query.question);
+    var options = [];
+    var optArr = req.query.options.split('/');
+    /*if(optArr.length <= 1){
+        options.push({
+            "optName" : optArr[0],
+            "count" : 0
+        })
+    }else{
+        
+    }*/
+    
+    optArr.forEach(function(o){
+        var temp = {
+            "optName" : o,
+            "count" : 0
+        }
+        options.push(temp);
+    })
+    var question = req.query.question;
+    var newPoll = {
+        "name" : question,
+        "question" : question,
+        "id" : uuid.v4(),
+        "options" : options
+    }
+    polls.push(newPoll);
+    res.render("adminUser");
 })
 

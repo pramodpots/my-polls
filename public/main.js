@@ -44,7 +44,7 @@ $(function() {
                 temp.push(o.optName);
                 temp.push(o.count);
                 rows.push(temp);
-                temp=[];
+                temp = [];
             })
             opt += '</form>'
             console.log(showChart);
@@ -67,7 +67,7 @@ $(function() {
                 };
                 var chart = new google.visualization.PieChart(document.getElementById('showchart'));
                 chart.draw(data, options);
-                rows=[];
+                rows = [];
             }
         });
     }
@@ -94,7 +94,26 @@ $(function() {
             getPollInfo();
         })
     })
-
+/*
+    $('#create').click(function() {
+        var optionNames = $('#new-opts').val()
+        var question = $('#new-poll').val();
+        //console.log("new options " +optionNames + "new poll" + question);
+        var info = {
+            "que" : question,
+            "optNames" : optionNames
+        }
+        $.ajax({
+            type: "POST",
+            url: "/app.js",
+            dataType: "json",
+            data: info,
+            success: function(msg) {
+                console.log(msg);
+            }
+        });
+    })
+*/
     $("#delete").click(function() {
         $.ajax({
             type: "DELETE",
