@@ -5,6 +5,7 @@ body {
     font-size: 1.5em;
 }
 .styled{
+  margin-top: 10%;
   height: auto;
   border: 5px solid #f48523;
   border-radius: 20px;

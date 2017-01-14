@@ -1,7 +1,8 @@
 $(function() {
     var rows = [];
-    $('#vote').hide();
+    //$('#vote').hide();
     $('#option-add').hide();
+    $('#buttons').hide();
     var pollID;
 
     $.ajax({
@@ -20,9 +21,9 @@ $(function() {
     $('body').on('click', 'a.room', function(event) {
         pollID = $(event.target).attr("data-room-id");
         getPollInfo();
-        $('#vote').show();
+       // $('#vote').show();
         $('#option-add').show();
-
+        $('#buttons').show();
 
     });
 
@@ -50,6 +51,7 @@ $(function() {
             console.log(showChart);
             $("#show-opts").html(opt);
             $("#question").text(data.question)
+            
 
             google.charts.load('current', {
                 'packages': ['corechart']
