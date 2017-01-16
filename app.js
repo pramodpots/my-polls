@@ -1,7 +1,6 @@
 var express = require("express")
 var app = express();
 var _ = require("lodash")
-//var polls = require("./data/polls.json");
 var uuid = require("node-uuid")
 var mongoose = require("mongoose");
 mongoose.connect('localhost:27017/data')
@@ -21,17 +20,17 @@ var pollsSchema = new Schema({
 })
 var userData = mongoose.model('userData', userDataSchema)
 var poll = mongoose.model('pollsData', pollsSchema)
-/*
+    /*
 
-app.get('/insert/user', function(req, res) {
-    var item = {
-        uname: "ppmakeitcount",
-        id: uuid.v4()
-    }
-    var data = new userData(item);
-    data.save();
-    res.json(data);
-})*/
+    app.get('/insert/user', function(req, res) {
+        var item = {
+            uname: "ppmakeitcount",
+            id: uuid.v4()
+        }
+        var data = new userData(item);
+        data.save();
+        res.json(data);
+    })*/
 
 /*
 app.get('/show/user', function(req, res) {
@@ -59,7 +58,9 @@ app.listen(8080, function() {
 })
 
 app.get('/getsinglepoll', function(req, res) {
-    poll.findOne({ _id : req.query.id})
+    poll.findOne({
+            _id: req.query.id
+        })
         .then(function(doc) {
             res.json(doc);
         })
@@ -71,7 +72,7 @@ app.get('/mypolls', function(req, res) {
 
 app.get('/', function(req, res) {
     res.render("layout");
-    
+
 })
 
 
@@ -80,39 +81,49 @@ app.get('/admin', function(req, res) {
 })
 
 app.get('/api/polls', function(req, res) {
-   poll.find()
+    poll.find()
         .then(function(doc) {
             res.json(doc);
         })
 })
 
 //to di
-app.get('/api/polls/:pollID', function(req, res) {
+/*app.get('/api/polls/:pollID', function(req, res) {
     var poll = polls.filter(p => p.id === req.params.pollID)
     res.json(poll[0])
 })
-
+*/
 //to update option count
 app.get('/api/polls/:pollID/:optName', function(req, res) {
-        var poll = _.find(polls, p => p.id === req.params.pollID);
+        //var poll = _.find(polls, p => p.id === req.params.pollID);
         var option = req.params.optName;
-        poll.options.forEach(function(o) {
-            if (o.optName == option) {
-                o.count += 1;
-            }
-        });
-        res.sendStatus(200);
+        var p = req.params.pollID;
+        console.log(option + p)
+
+        poll.findById(p, function(err, doc) {
+            if (err) console.log(err);
+            doc.options.forEach(function(o) {
+                if (o.optName == option) {
+                    o.count += 1;
+                }
+            })
+            doc.save();
+        })
+        res.sendStatus(200)
     })
     //to add new option
 app.get('/api/addPollOption/:pollID/:newOptName', function(req, res) {
-    var poll = _.find(polls, p => p.id === req.params.pollID);
-    var opt = {
+    var p = req.params.pollID;
+    var temp = {
         "optName": req.params.newOptName,
-        "count": 1
-    };
-    console.log(opt);
-    poll.options.push(opt)
-    res.sendStatus(200);
+        "count": 0
+    }
+    poll.findById(p, function(err, doc) {
+        if (err) console.log(err);
+        doc.options.push(temp)
+        doc.save();
+    })
+    res.sendStatus(200)
 })
 
 app.get('/admin/myPolls', function(req, res) {
@@ -124,7 +135,7 @@ app.get('/admin/addPoll', function(req, res) {
 })
 
 app.get('/admin/create', function(req, res) {
-    
+
     var options = [];
     var optArr = req.query.options.split('/');
 
@@ -148,8 +159,15 @@ app.get('/admin/create', function(req, res) {
 })
 
 app.get('/admin/delete', function(req, res) {
-    polls = polls.filter(function(poll) {
-        return req.query.id !== poll.id
-    })
-    res.redirect('/')
+    var id = req.query.id
+    console.log(id)
+    poll.findByIdAndRemove(id, function (err, poll) {  
+    // We'll create a simple object to send back with a message and the id of the document that was removed
+    // You can really do this however you want, though.
+    var response = {
+        message: "Todo successfully deleted",
+        id: poll._id
+    };
+    res.redirect('/');
+});
 })

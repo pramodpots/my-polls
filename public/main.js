@@ -11,7 +11,6 @@ $(function() {
         url: "/api/polls"
     }).done(function(polls) {
         pollID = polls[0]._id;
-        //getMessages();
         $.each(polls, function(key, poll) {
             var a = '<a href="/mypolls?id=' + poll._id + '" data-room-id="' + poll._id + '" class="room list-group-item">' + poll.question + '</a>';
             $("#rooms").append(a);
@@ -21,6 +20,7 @@ $(function() {
 
 
     $("#add-new-option").click(function() {
+        var pollID = getQueryVariable("id");
         var newOptName = $('#new-option').val();
         console.log(newOptName);
         $('#new-option').val('');
@@ -34,14 +34,16 @@ $(function() {
 
     $('#vote').click(function() {
         var optionName = $('input[name="optradio"]:checked').val();
+        var pollID = getQueryVariable("id");
         $.ajax({
             type: "GET",
             url: "/api/polls/" + pollID + "/" + optionName,
 
         }).done(function(data) {
             location.reload();
-
+            console.log(data);
         })
+        console.log(optionName + "selected");
     })
 
     var rows = [];
@@ -51,7 +53,7 @@ $(function() {
         type: "GET",
         url: "/getsinglepoll?id=" + pollID,
     }).done(function(data) {
-        console.log(data);
+        //console.log(data);
         title = data.question;
         var opt = '<form id="myForm">';
         var array = data.options;
@@ -69,7 +71,7 @@ $(function() {
         console.log(showChart);
         $("#show-opts").html(opt);
         $("#question").text(data.question)
-        $("#delete").attr('href', 'admin/delete?id=' + pollID)
+        $("#delete").attr('href', '/admin/delete?id=' + pollID)
         $('#delete').show();
         $('#option-add').show();
         $('#buttons').show();
@@ -93,6 +95,8 @@ $(function() {
             rows = [];
         }
     });
+    
+    
 
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
