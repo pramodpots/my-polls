@@ -10,69 +10,15 @@ $(function() {
         type: "GET",
         url: "/api/polls"
     }).done(function(polls) {
-        pollID = polls[0].id;
+        pollID = polls[0]._id;
         //getMessages();
         $.each(polls, function(key, poll) {
-            var a = '<a href="#" data-room-id="' + poll.id + '" class="room list-group-item">' + poll.name + '</a>';
+            var a = '<a href="/mypolls?id=' + poll._id + '" data-room-id="' + poll._id + '" class="room list-group-item">' + poll.question + '</a>';
             $("#rooms").append(a);
         });
 
     });
 
-    $('body').on('click', 'a.room', function(event) {
-        pollID = $(event.target).attr("data-room-id");
-        getPollInfo();
-        $('#option-add').show();
-        $('#buttons').show();
-
-    });
-
-    function getPollInfo() {
-        rows = [];
-        var title = "";
-        $.ajax({
-            type: "GET",
-            url: "/api/polls/" + pollID,
-        }).done(function(data) {
-            title = data.question;
-            var opt = '<form id="myForm">';
-            var array = data.options;
-            var showChart = " ";
-            array.forEach(function(o) {
-                opt += '<label class="radio-inline"><input type="radio" name="optradio" value="' + o.optName + '" >' + o.optName + '</label>';
-                showChart += o.optName + " " + o.count + " ";
-                var temp = [];
-                temp.push(o.optName);
-                temp.push(o.count);
-                rows.push(temp);
-                temp = [];
-            })
-            opt += '</form>'
-            console.log(showChart);
-            $("#show-opts").html(opt);
-            $("#question").text(data.question)
-            $("#delete").attr('href', 'admin/delete?id=' + pollID)
-            
-            google.charts.load('current', {
-                'packages': ['corechart']
-            });
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = new google.visualization.DataTable();
-                data.addColumn('string', 'options')
-                data.addColumn('number', 'votes');
-                data.addRows(rows);
-                var options = {
-                    'legend': 'right',
-                    'is3D': true,
-                };
-                var chart = new google.visualization.PieChart(document.getElementById('showchart'));
-                chart.draw(data, options);
-                rows = [];
-            }
-        });
-    }
 
     $("#add-new-option").click(function() {
         var newOptName = $('#new-option').val();
@@ -82,7 +28,7 @@ $(function() {
             type: "GET",
             url: "/api/addPollOption/" + pollID + "/" + newOptName
         }).done(function(data) {
-            getPollInfo();
+            location.reload();
         })
     })
 
@@ -93,30 +39,71 @@ $(function() {
             url: "/api/polls/" + pollID + "/" + optionName,
 
         }).done(function(data) {
-            getPollInfo();
-            $('#showchart').show();
+            location.reload();
 
         })
     })
-/*
-    $('#create').click(function() {
-        var optionNames = $('#new-opts').val()
-        var question = $('#new-poll').val();
-        //console.log("new options " +optionNames + "new poll" + question);
-        var info = {
-            "que" : question,
-            "optNames" : optionNames
-        }
-        $.ajax({
-            type: "POST",
-            url: "/app.js",
-            dataType: "json",
-            data: info,
-            success: function(msg) {
-                console.log(msg);
-            }
-        });
-    })
-*/
 
+    var rows = [];
+    var title = "";
+    var pollID = getQueryVariable("id");
+    $.ajax({
+        type: "GET",
+        url: "/getsinglepoll?id=" + pollID,
+    }).done(function(data) {
+        console.log(data);
+        title = data.question;
+        var opt = '<form id="myForm">';
+        var array = data.options;
+        var showChart = " ";
+        array.forEach(function(o) {
+            opt += '<label class="radio-inline"><input type="radio" name="optradio" value="' + o.optName + '" >' + o.optName + '</label>';
+            showChart += o.optName + " " + o.count + " ";
+            var temp = [];
+            temp.push(o.optName);
+            temp.push(o.count);
+            rows.push(temp);
+            temp = [];
+        })
+        opt += '</form>'
+        console.log(showChart);
+        $("#show-opts").html(opt);
+        $("#question").text(data.question)
+        $("#delete").attr('href', 'admin/delete?id=' + pollID)
+        $('#delete').show();
+        $('#option-add').show();
+        $('#buttons').show();
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+        $('#showchart').show();
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'options')
+            data.addColumn('number', 'votes');
+            data.addRows(rows);
+            var options = {
+                'legend': 'right',
+                'is3D': true,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('showchart'));
+            chart.draw(data, options);
+            rows = [];
+        }
+    });
+
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i <
+            vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (false);
+    }
 });

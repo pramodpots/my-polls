@@ -1,158 +1,43 @@
-[
- {
-  "name":"republicans",
-  "question":"who is the best captain",
-  "id":"f2754172-1c58-41ed-ae84-74e046888adb",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "Kapli",
-            "count" : 9 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- },
- {
-  "name":"republicans",
-  "question":"who is the best kljdjlajs",
-  "id":"f2754172-1c58-41ed-ae84-sdfdf",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- },
- {
-  "name":"republicans",
-  "question":"who is the dfajdjflj captain",
-  "id":"f2754172-1c58-41ed-ae84-sfsdfgg",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- },
- {
-  "name":"republicans",
-  "question":"who is the best captain",
-  "id":"f2754172-1c58-41ed-ae84-74e046888adb",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "Kapli",
-            "count" : 9 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- },
- {
-  "name":"republicans",
-  "question":"who is the best kljdjlajs",
-  "id":"f2754172-1c58-41ed-ae84-sdfdf",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- },
- {
-  "name":"republicans",
-  "question":"who is the dfajdjflj captain",
-  "id":"f2754172-1c58-41ed-ae84-sfsdfgg",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- },
- {
-  "name":"republicans",
-  "question":"who is the best captain",
-  "id":"f2754172-1c58-41ed-ae84-74e046888adb",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "Kapli",
-            "count" : 9 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- },
- {
-  "name":"republicans",
-  "question":"who is the best kljdjlajs",
-  "id":"f2754172-1c58-41ed-ae84-sdfdf",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- },
- {
-  "name":"republicans",
-  "question":"who is the dfajdjflj captain",
-  "id":"f2754172-1c58-41ed-ae84-sfsdfgg",
-  "options":
-    [
-        {
-            "optName" : "dhoni",
-            "count" : 5 
-        },
-        {
-            "optName" : "kholi",
-            "count" : 4 
-        }
-    ]
- }
-]
+[{
+    "question": "who is the best captain",
+    "options": [{
+        "optName": "dhoni",
+        "count": 5
+    }, {
+        "optName": "Kapli",
+        "count": 9
+    }, {
+        "optName": "kholi",
+        "count": 4
+    }],
+    "owner_id": "587c7426b05f875c12ccaa29",
+
+}, {
+    "question": "who is the best bollwer",
+    "options": [{
+        "optName": "zaheer khan",
+        "count": 15
+    }, {
+        "optName": "Malinga",
+        "count": 9
+    }, {
+        "optName": "Bret Lee",
+        "count": 14
+    }],
+    "owner_id": "587c7426b05f875c12ccaa29",
+
+}, {
+    "question": "who is the best allrounder",
+    "options": [{
+        "optName": "Yuvi",
+        "count": 5
+    }, {
+        "optName": "Pollard",
+        "count": 9
+    }, {
+        "optName": "Aishwin",
+        "count": 4
+    }],
+    "owner_id": "587c73f8b05f875c12ccaa26"
+
+}]
