@@ -1,8 +1,9 @@
 $(function() {
     var rows = [];
-    //$('#vote').hide();
+    $('#delete').hide();
     $('#option-add').hide();
     $('#buttons').hide();
+    $('#showchart').hide();
     var pollID;
 
     $.ajax({
@@ -21,7 +22,6 @@ $(function() {
     $('body').on('click', 'a.room', function(event) {
         pollID = $(event.target).attr("data-room-id");
         getPollInfo();
-       // $('#vote').show();
         $('#option-add').show();
         $('#buttons').show();
 
@@ -51,8 +51,8 @@ $(function() {
             console.log(showChart);
             $("#show-opts").html(opt);
             $("#question").text(data.question)
+            $("#delete").attr('href', 'admin/delete?id=' + pollID)
             
-
             google.charts.load('current', {
                 'packages': ['corechart']
             });
@@ -94,6 +94,8 @@ $(function() {
 
         }).done(function(data) {
             getPollInfo();
+            $('#showchart').show();
+
         })
     })
 /*
@@ -116,13 +118,5 @@ $(function() {
         });
     })
 */
-    $("#delete").click(function() {
-        $.ajax({
-            type: "DELETE",
-            url: "/api/rooms/" + roomId + "/messages",
-        }).done(function() {
-            $("#messages").val("");
-        });
-    });
 
 });

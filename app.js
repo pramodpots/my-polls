@@ -19,6 +19,7 @@ app.get('/', function(req, res) {
     res.render("layout");
 })
 
+
 app.get('/admin', function(req, res) {
     res.render("adminUser");
 })
@@ -65,18 +66,9 @@ app.get('/admin/addPoll', function(req, res) {
 })
 
 app.get('/admin/create', function(req, res) {
-    //res.render('addpoll');
-    //console.log("options" + req.query.options + "que" + req.query.question);
+    
     var options = [];
     var optArr = req.query.options.split('/');
-    /*if(optArr.length <= 1){
-        options.push({
-            "optName" : optArr[0],
-            "count" : 0
-        })
-    }else{
-        
-    }*/
     
     optArr.forEach(function(o){
         var temp = {
@@ -93,6 +85,12 @@ app.get('/admin/create', function(req, res) {
         "options" : options
     }
     polls.push(newPoll);
-    res.render("adminUser");
+    res.redirect('/admin')
 })
 
+app.get('/admin/delete', function(req, res) {
+    polls = polls.filter(function(poll) {
+        return req.query.id !== poll.id
+    })
+    res.redirect('/')
+})
