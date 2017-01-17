@@ -4,12 +4,11 @@ html(lang='en')
     meta(charset='UTF-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    title= title
+    title
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='/style.css')
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
     script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
-
   body
     nav.navbar.navbar-default
       .container-fluid
@@ -22,13 +21,36 @@ html(lang='en')
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='/') Home 
+              a(href='/admin') Home 
             li
-              a(href='/admin/myPolls') My Polls
+              a#mypolls-id My Polls
             li
               a(href='/admin/addPoll') Create Poll
             li
               a.btn.btn-default(href='/logout') logout
     .container
       .main-content
-      include polls
+        .col-md-8.text-center
+          #pollFor(style='padding:0px 40px 0px 40px;')
+            h1#question
+            .row
+              #show-opts.col-md-6
+              #option-add.col-md-6.input-group
+                input#new-option.form-control(type='text', placeholder='add your own option')
+                .input-group-btn
+                  button#add-new-option.btn.btn-default add
+            #buttons.row                    
+              a#vote.btn.btn-success.btn-block.btn-lg(style='margin: 30px 20px') Vote
+              a#twitter.twitter-share-button(href='https://twitter.com/share', data-size='large', data-text='Find out this poll on this site:', data-show-count='false') Tweet
+          #showchart
+        .col-md-4
+          h3 Polls
+          #rooms.list-group
+          
+      .mypolls-div
+        .col-md-6.col-md-offset-3
+          h3 My Polls
+          #mypolls.list-group
+      script(src='/jquery.min.js', type='text/javascript')
+      script(src='/adminuser.js', type='text/javascript')
+      script(async='', src='//platform.twitter.com/widgets.js', charset='utf-8')

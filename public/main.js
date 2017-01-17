@@ -1,7 +1,5 @@
 $(function() {
     var rows = [];
-    $('#delete').hide();
-    $('#option-add').hide();
     $('#buttons').hide();
     $('#showchart').hide();
     var pollID;
@@ -17,21 +15,7 @@ $(function() {
         });
 
     });
-
-
-    $("#add-new-option").click(function() {
-        var pollID = getQueryVariable("id");
-        var newOptName = $('#new-option').val();
-        console.log(newOptName);
-        $('#new-option').val('');
-        $.ajax({
-            type: "GET",
-            url: "/api/addPollOption/" + pollID + "/" + newOptName
-        }).done(function(data) {
-            location.reload();
-        })
-    })
-
+    
     $('#vote').click(function() {
         var optionName = $('input[name="optradio"]:checked').val();
         var pollID = getQueryVariable("id");
@@ -41,9 +25,7 @@ $(function() {
 
         }).done(function(data) {
             location.reload();
-            console.log(data);
         })
-        console.log(optionName + "selected");
     })
 
     var rows = [];
@@ -51,9 +33,8 @@ $(function() {
     var pollID = getQueryVariable("id");
     $.ajax({
         type: "GET",
-        url: "/getsinglepoll?id=" + pollID,
+        url: "/api/getsinglepoll?id=" + pollID,
     }).done(function(data) {
-        //console.log(data);
         title = data.question;
         var opt = '<form id="myForm">';
         var array = data.options;
@@ -68,12 +49,8 @@ $(function() {
             temp = [];
         })
         opt += '</form>'
-        console.log(showChart);
         $("#show-opts").html(opt);
         $("#question").text(data.question)
-        $("#delete").attr('href', '/admin/delete?id=' + pollID)
-        $('#delete').show();
-        $('#option-add').show();
         $('#buttons').show();
         google.charts.load('current', {
             'packages': ['corechart']
@@ -96,8 +73,6 @@ $(function() {
         }
     });
     
-    
-
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");

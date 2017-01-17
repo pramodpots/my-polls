@@ -8,8 +8,7 @@ var poll = require("./schema");
 router.get('/admin', function(req, res) {
     res.render("adminUser");
 })
-
-
+            
 router.get('/admin/myPolls', function(req, res) {
     res.render('adminUser')
 })
@@ -34,19 +33,18 @@ router.get('/admin/create', function(req, res) {
     var newPoll = {
         "question": question,
         "options": options,
-        "owner_id": "587c73f8b05f875c12ccaa26"
+        "owner_id": req.user.account.id
     }
     var data = new poll(newPoll);
     data.save();
-    res.redirect('/')
+    res.redirect('/admin')
 
 })
 
 router.get('/admin/delete', function(req, res) {
     var id = req.query.id
-    console.log(id)
     poll.findByIdAndRemove(id, function(err, poll) {
         if (err) return err;
-        res.redirect('/');
+        res.redirect('/admin');
     });
 })

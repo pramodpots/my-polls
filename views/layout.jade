@@ -25,7 +25,19 @@ html(lang='en')
               a(href='/') Home 
             li
               a.btn.btn-default(href='/login')
-                i.fa.fa-google.fa-1x(aria-hidden='true')
+                i.fa.fa-twitter.fa-1x(aria-hidden='true')
     .container
       .main-content
-      include polls
+        div.col-md-8.text-center
+          div#pollFor(style="padding:0px 40px 0px 40px;")
+            h1#question
+            div.row
+                div#show-opts.col-md-6.col-md-offset-3
+            div#buttons.row
+                a#vote.btn.btn-success.btn-block.btn-lg(style="margin: 30px 20px") Vote
+          div#showchart
+        div.row.col-md-4
+          h3 Polls
+          div#rooms.list-group
+  script(src="/jquery.min.js",type="text/javascript")
+  script(src="/main.js",type="text/javascript")

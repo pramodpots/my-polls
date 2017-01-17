@@ -12,13 +12,29 @@ router.get('/api/polls', function(req, res) {
         })
 })
 
+router.get('/api/my/polls', function(req, res) {
+    poll.find({
+            'owner_id': req.user.account.id
+        })
+        .then(function(doc) {
+            res.json(doc);
+        })
+})
+
+
+router.get('/api/getsinglepoll', function(req, res) {
+    poll.findOne({
+            _id: req.query.id
+        })
+        .then(function(doc) {
+            res.json(doc);
+        })
+})
+
 //to update option count
 router.get('/api/polls/:pollID/:optName', function(req, res) {
-        //var poll = _.find(polls, p => p.id === req.params.pollID);
         var option = req.params.optName;
         var p = req.params.pollID;
-        console.log(option + p)
-
         poll.findById(p, function(err, doc) {
             if (err) console.log(err);
             doc.options.forEach(function(o) {
